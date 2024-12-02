@@ -1,0 +1,12 @@
+[package]
+name = "jsonish"
+version = "0.1.0"
+authors = ["Dale Bustad <dale@divmain.com>"]
+edition = "2018"
+categories = ["wasm"]
+
+[dependencies]
+console_error_panic_hook = "0.1.7"
+# There is a bug in 0.2.96+ that causes compilation to fail when using the stable compiler
+wasm-bindgen = { version = "= 0.2.95", features = ["serde", "serde-serialize", "serde_json"] }
+web-sys = { version = "0.3.72", features = ["console"] }

@@ -1,11 +1,19 @@
 {
   "name": "@divmain/jsonish",
   "version": "0.1.0",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf dist && rollup --config",
+    "build:clean": "rimraf dist && rimraf target && rollup --config"
   },
   "author": "Dale Bustad <dale@divmain.com>",
   "license": "MIT",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@wasm-tool/rollup-plugin-rust": "^2.4.5",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.28.0"
+  }
 }
