@@ -1,6 +1,9 @@
-import wasm from "./Cargo.toml";
+import jsonishWasm from "./Cargo.toml";
 
-export async function loadWasm() {
-    const exports = await wasm();
-    console.log('exports', exports);
-}
+const {
+  repair,
+} = await jsonishWasm();
+
+export {
+  repair,
+};
