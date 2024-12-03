@@ -1,3 +1,6 @@
+// Adapted from Chumsky's JSON example:
+// https://github.com/zesterer/chumsky/blob/b757ad0b00f1f9207141e106ec55d2b4c2e0257c/examples/json.rs
+
 use chumsky::prelude::*;
 use wasm_bindgen::prelude::*;
 use web_sys::console;
