@@ -82,9 +82,16 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             .ignored()
             .boxed();
 
+        let false_end_quote = just('"')
+            // If what looks like an end-quote is not followed by a comma, newline, or colon, then
+            // we treat that double quote as though it was escaped.
+            .then(none_of(",\n:}]").rewind())
+            .ignored();
+
         let double_quote_string = none_of("\\\"")
             .ignored()
             .or(escape.clone())
+            .or(false_end_quote)
             .repeated()
             .to_slice()
             .map(ToString::to_string)

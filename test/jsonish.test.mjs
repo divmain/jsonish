@@ -204,4 +204,24 @@ describe('jsonish', () => {
     t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
     t.assert.deepStrictEqual(parsed, largeObj);
   });
+
+  it('can repair unescaped double-quotes within strings', (t) => {
+    const objWithDoubleQuotedContent = structuredClone(largeObj);
+    objWithDoubleQuotedContent.overview.summary = objWithDoubleQuotedContent.overview.summary
+      .replace('behind-the-scenes', `"behind-the-scenes"`)
+      .replace('drama', '"drama');
+
+    // Transform the _serialized_ JSON to unescape the double-quote characters.
+    const invalidJson = JSON.stringify(objWithDoubleQuotedContent)
+      .replace('\\"behind-the-scenes\\"', '"behind-the-scenes"');
+    t.assert.throws(() => JSON.parse(invalidJson), {
+      message: /Expected ',' or '}' after property value in JSON/,
+    });
+
+    const repaired = repair(invalidJson);
+
+    let parsed;
+    t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
+    t.assert.deepStrictEqual(parsed, objWithDoubleQuotedContent);
+  });
 });
