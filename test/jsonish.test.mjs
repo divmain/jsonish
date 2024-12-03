@@ -159,7 +159,7 @@ const largeObj = {
     }
   }
 };
-const largeJson = JSON.stringify(largeObj);
+const largeJson = JSON.stringify(largeObj, null, 2);
 
 describe('jsonish', () => {
   it('can repair undelimited keys', (t) => {
@@ -174,6 +174,19 @@ describe('jsonish', () => {
     let parsed;
     t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
     t.assert.deepStrictEqual(parsed, largeObj);
+  });
+
+  it('preserves correctly escaped double quotes within strings', (t) => {
+    const largeObjWithEscaped = structuredClone(largeObj);
+    largeObjWithEscaped.overview.summary = largeObjWithEscaped.overview.summary
+      .replace('behind-the-scenes', `"behind-the-scenes"`)
+      .replace('drama', '"drama');
+    const validJson = JSON.stringify(largeObjWithEscaped);
+    t.assert.doesNotThrow(() => JSON.parse(validJson));
+    const repaired = repair(validJson);
+    let parsed;
+    t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
+    t.assert.deepStrictEqual(parsed, largeObjWithEscaped);
   });
 
   it('can repair single-quote-delimited strings', (t) => {

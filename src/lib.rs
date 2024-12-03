@@ -88,6 +88,7 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             .repeated()
             .to_slice()
             .map(ToString::to_string)
+            .map(|s| s.replace("\\", ""))
             .delimited_by(just('"'), just('"'))
             .boxed();
 
