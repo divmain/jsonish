@@ -1,7 +1,6 @@
 {
   "name": "@divmain/jsonish",
-  "version": "0.1.3",
-  "main": "./dist/index.js",
+  "version": "0.1.4",
   "types": "./types/index.d.ts",
   "exports": {
     ".": {
