@@ -163,11 +163,20 @@ describe('jsonish', () => {
   it('can repair undelimited keys', (t) => {
     const input = `{ foo: "bar" }`;
     const repaired = repair(input);
+    t.assert.doesNotThrow(() => JSON.parse(repaired));
     t.assert.equal(repaired, `{"foo":"bar"}`);
   })
 
   it('preserves already-valid JSON', (t) => {
     const repaired = repair(largeJson);
+    let parsed;
+    t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
+    t.assert.deepStrictEqual(parsed, largeObj);
+  });
+
+  it('can repair single-quote-delimited strings', (t) => {
+    const jsonishContent = largeJson.replace(`"80%"`, `'80%'`);
+    const repaired = repair(jsonishContent);
     let parsed;
     t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
     t.assert.deepStrictEqual(parsed, largeObj);

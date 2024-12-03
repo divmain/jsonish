@@ -82,7 +82,7 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             .ignored()
             .boxed();
 
-        let string = none_of("\\\"")
+        let double_quote_string = none_of("\\\"")
             .ignored()
             .or(escape.clone())
             .repeated()
@@ -91,6 +91,14 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             .delimited_by(just('"'), just('"'))
             .boxed();
 
+        let single_quote_string = none_of("\\'")
+            .ignored()
+            .or(escape.clone())
+            .repeated()
+            .to_slice()
+            .map(ToString::to_string)
+            .delimited_by(just('\''), just('\''))
+            .boxed();
 
         let undelimited_key = any::<&'a str, extra::Err<Rich<'a, char>>>()
             .filter(|c: &char| c.is_ascii_alphabetic())
@@ -117,7 +125,7 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             )
             .boxed();
 
-        let member = undelimited_key.or(string.clone()).then_ignore(just(':').padded()).then(value);
+        let member = undelimited_key.or(double_quote_string.clone()).or(single_quote_string.clone()).then_ignore(just(':').padded()).then(value);
         let object = member
             .clone()
             .separated_by(just(',').padded().recover_with(skip_then_retry_until(
@@ -141,7 +149,8 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             just("true").to(JsonValue::Bool(true)),
             just("false").to(JsonValue::Bool(false)),
             number.map(JsonValue::Number),
-            string.map(JsonValue::String),
+            double_quote_string.map(JsonValue::String),
+            single_quote_string.map(JsonValue::String),
             array.map(JsonValue::Array),
             object.map(JsonValue::Object),
         ))
