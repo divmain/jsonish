@@ -1,15 +1,20 @@
 {
   "name": "@divmain/jsonish",
   "version": "0.1.1",
-  "type": "module",
   "main": "./dist/index.js",
   "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rimraf dist && rollup --config",
-    "build:clean": "rimraf dist && rimraf target && rollup --config",
+    "build": "rimraf dist && rollup --config rollup.config.mjs",
+    "build:clean": "rimraf target && npm run build",
     "prepublishOnly": "npm run build:clean && npm run test",
     "test": "node --test"
   },

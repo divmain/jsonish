@@ -4,12 +4,20 @@ export default {
   input: {
     index: 'src/index.js',
   },
-  output: {
-    dir: 'dist',
-    name: 'jsonish',
-    format: 'es',
-    sourcemap: true,
-  },
+  output: [
+    {
+      dir: 'dist/esm/',
+      // name: 'jsonish',
+      format: 'esm',
+      sourcemap: true,
+    },
+    {
+      dir: 'dist/cjs/',
+      // name: 'jsonish',
+      format: 'cjs',
+      sourcemap: true,
+    }
+  ],
   plugins: [
     rust({
       nodejs: true,

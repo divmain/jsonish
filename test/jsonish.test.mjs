@@ -1,5 +1,7 @@
-import { describe, mock, it } from 'node:test';
-import { repair } from '../dist/index.js';
+import { describe, it } from 'node:test';
+import { load } from '@divmain/jsonish';
+
+const { repair } = await load();
 
 const largeObj = {
   "title": "The Newsroom",

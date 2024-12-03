@@ -1,1 +1,1 @@
-export function repair(brokenJson: string): string;
+export function load(): Promise<{ repair: (brokenJson: string) => string }>;
