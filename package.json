@@ -1,6 +1,6 @@
 {
   "name": "@divmain/jsonish",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "./dist/index.js",
   "types": "./types/index.d.ts",
   "exports": {
@@ -10,7 +10,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "scripts": {
     "build": "rimraf dist && rollup --config rollup.config.mjs",
