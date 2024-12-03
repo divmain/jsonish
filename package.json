@@ -1,9 +1,12 @@
 {
   "name": "@divmain/jsonish",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rimraf dist && rollup --config",
     "build:clean": "rimraf dist && rimraf target && rollup --config",
