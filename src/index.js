@@ -1,6 +1,6 @@
 import jsonishWasm from "../Cargo.toml";
 
-/** @type Promise<{ repair: (brokenJson: string) => string; }> */
+/** @type Promise<{ repair: (brokenJson: string) => string | null; }> */
 export async function load() {
   const {
     repair: _internalRepair,
