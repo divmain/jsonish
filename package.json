@@ -7,7 +7,8 @@
   "scripts": {
     "build": "rimraf dist && rollup --config",
     "build:clean": "rimraf dist && rimraf target && rollup --config",
-    "test": "npm run build && node --test"
+    "prepublishOnly": "npm run build:clean && npm run test",
+    "test": "node --test"
   },
   "author": "Dale Bustad <dale@divmain.com>",
   "license": "MIT",
