@@ -6,7 +6,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && rollup --config",
-    "build:clean": "rimraf dist && rimraf target && rollup --config"
+    "build:clean": "rimraf dist && rimraf target && rollup --config",
+    "test": "npm run build && node --test"
   },
   "author": "Dale Bustad <dale@divmain.com>",
   "license": "MIT",
