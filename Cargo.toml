@@ -6,7 +6,11 @@ edition = "2018"
 categories = ["wasm"]
 
 [dependencies]
+ariadne = "0.5.0"
+chumsky = "1.0.0-alpha.7"
 console_error_panic_hook = "0.1.7"
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
 # There is a bug in 0.2.96+ that causes compilation to fail when using the stable compiler
 wasm-bindgen = { version = "= 0.2.95", features = ["serde", "serde-serialize", "serde_json"] }
 web-sys = { version = "0.3.72", features = ["console"] }
