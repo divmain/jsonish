@@ -125,6 +125,12 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             )
             .boxed();
 
+        let js_like_identifier = any()
+            .filter(|c: &char| c.is_ascii_alphabetic())
+            .repeated()
+            .at_least(1)
+            .collect::<String>();
+
         let member = undelimited_key.or(double_quote_string.clone()).or(single_quote_string.clone()).then_ignore(just(':').padded()).then(value);
         let object = member
             .clone()
@@ -151,6 +157,7 @@ fn jsonish_parser<'a>() -> impl Parser<'a, &'a str, JsonValue, extra::Err<Rich<'
             number.map(JsonValue::Number),
             double_quote_string.map(JsonValue::String),
             single_quote_string.map(JsonValue::String),
+            js_like_identifier.map(JsonValue::String),
             array.map(JsonValue::Array),
             object.map(JsonValue::Object),
         ))

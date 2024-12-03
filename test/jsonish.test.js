@@ -181,4 +181,12 @@ describe('jsonish', () => {
     t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
     t.assert.deepStrictEqual(parsed, largeObj);
   });
+
+  it('can repair object values that look like javascript objects', (t) => {
+    const jsonishContent = largeJson.replace(`"Drama"`, 'Drama');
+    const repaired = repair(jsonishContent);
+    let parsed;
+    t.assert.doesNotThrow(() => { parsed = JSON.parse(repaired); });
+    t.assert.deepStrictEqual(parsed, largeObj);
+  });
 });
