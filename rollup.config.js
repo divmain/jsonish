@@ -2,7 +2,7 @@ import rust from '@wasm-tool/rollup-plugin-rust';
 
 export default {
   input: {
-    main: 'main.js',
+    index: 'src/index.js',
   },
   output: {
     dir: 'dist',

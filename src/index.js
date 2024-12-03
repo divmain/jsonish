@@ -1,4 +1,4 @@
-import jsonishWasm from "./Cargo.toml";
+import jsonishWasm from "../Cargo.toml";
 
 const {
   repair,
